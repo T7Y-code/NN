@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Glowing Button Website</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Roboto:wght@400;700&display=swap');
+
+        h1 {
+            font-family: 'Orbitron', Arial, sans-serif;
+            margin-bottom: 2em;
+            font-size: 2em;
+            letter-spacing: 1px;
+        }
+
+        .nav-btn {
+            font-family: 'Orbitron', Arial, sans-serif;
+            --glow-color: rgb(217, 176, 255);
+            --glow-spread-color: rgba(113, 61, 138, 0.781);
+            --enhanced-glow-color: rgb(231, 206, 255);
+            --btn-color: rgb(100, 61, 136);
+            border: .25em solid var(--glow-color);
+            padding: 1em 3em;
+            color: var(--glow-color);
+            font-size: 15px;
+            font-weight: bold;
+            background-color: var(--btn-color);
+            border-radius: 1em;
+            outline: none;
+            box-shadow: 0 0 1em .25em var(--glow-color),
+                        0 0 4em 1em var(--glow-spread-color),
+                        inset 0 0 .75em .25em var(--glow-color);
+            text-shadow: 0 0 .5em var(--glow-color);
+            position: relative;
+            transition: all 0.3s;
+            margin: 0.5em 1em;
+            min-width: 120px;
+            cursor: pointer;
+        }
+
+        .nav-btn::after {
+            pointer-events: none;
+            content: "";
+            position: absolute;
+            top: 120%;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            background-color: var(--glow-spread-color);
+            filter: blur(2em);
+            opacity: .7;
+            transform: perspective(1.5em) rotateX(35deg) scale(1, .6);
+        }
+
+        .nav-btn:hover {
+            color: var(--btn-color);
+            background-color: var(--glow-color);
+            box-shadow: 0 0 1em .25em var(--glow-color),
+                        0 0 4em 2em var(--glow-spread-color),
+                        inset 0 0 .75em .25em var(--glow-color);
+        }
+
+        .nav-btn:active {
+            box-shadow: 0 0 0.6em .25em var(--glow-color),
+                        0 0 2.5em 2em var(--glow-spread-color),
+                        inset 0 0 .5em .25em var(--glow-color);
+        }
+
+        body {
+            background: #1a1023;
+            min-height: 100vh;
+            margin: 0;
+            font-family: 'Roboto', Arial, sans-serif;
+            color: #fff;
+        }
+
+        nav {
+            width: 100%;
+            background: #2d1846;
+            padding: 0.5em 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            display: flex;
+            justify-content: center;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .content {
+            margin-top: 6em;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Card Styles */
+        .card-group {
+            display: flex;
+            gap: 2em;
+            justify-content: center;
+            margin-top: 2em;
+        }
+        .card {
+            width: 195px;
+            height: 285px;
+            background: #313131;
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            transition: 0.2s ease-in-out;
+            position: relative;
+        }
+
+        .img {
+            height: 30%;
+            position: absolute;
+            transition: 0.2s ease-in-out;
+            z-index: 1;
+        }
+
+        .textBox {
+            opacity: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            transition: 0.2s ease-in-out;
+            z-index: 2;
+        }
+
+        .textBox > .text {
+            font-weight: bold;
+        }
+
+        .textBox > .head {
+            font-size: 20px;
+        }
+
+        .textBox > .price {
+            font-size: 17px;
+        }
+
+        .textBox > span {
+            font-size: 12px;
+            color: lightgrey;
+        }
+
+        .card:hover > .textBox {
+            opacity: 1;
+        }
+
+        .card:hover > .img {
+            height: 65%;
+            filter: blur(7px);
+            animation: anim 3s infinite;
+        }
+
+        @keyframes anim {
+            0% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+            100% {
+                transform: translateY(0);
+            }
+        }
+
+        .card:hover {
+            transform: scale(1.04) rotate(-1deg);
+        }
+    </style>
+</head>
+<<body>
+    <h1 id="main-title" style="text-align: center; font-size: 3em; margin-top: 1em; color: #d9b0ff;">
+        Willkommen auf meiner Website!
+    </h1>
+    <nav>
+        <button class="nav-btn" onclick="showSection('home')">Home</button>
+        <button class="nav-btn" onclick="showSection('projekte')">Projekte</button>
+        <button class="nav-btn" onclick="showSection('kontakt')">Kontakt</button>
+    </nav>
+    <div class="content">
+        <div id="home-section" style="text-align: center; display: none;"></div>
+    <!-- Profilbild -->
+    <img src="WhatsApp Image 2025-06-01 at 18.46.19.jpeg" alt="Profilbild" style="width: 200px; border-radius: 50%; margin-top: 1em;">
+    
+    <!-- Willkommensnachricht -->
+    <p>Ich bin Noah Nowak, ein kreativer Webentwickler und Designer. Hier findest du alles über meine Projekte und wie du mich kontaktieren kannst.</p>
+    
+    <!-- Übersicht über die Website -->
+    <ul style="text-align: left; margin: 1em auto; display: inline-block;">
+        <li><strong>Projekte:</strong> Eine Übersicht über meine bisherigen Arbeiten.</li>
+        <li><strong>Kontakt:</strong> Möglichkeiten, mich zu erreichen.</li>
+        <li><strong>Über mich:</strong> Mehr über meine Interessen und Fähigkeiten.</li>
+    </ul>
+    
+    <!-- Zitat oder Motto -->
+    <blockquote style="margin-top: 2em; font-style: italic; color: #d9b0ff;">
+        "Kreativität ist Intelligenz, die Spaß hat." – Albert Einstein
+    </blockquote>
+    
+    <!-- Social Media Links -->
+    <p style="margin-top: 2em;">
+        Folge mir auf: 
+        <a href="https://www.instagram.com/noah4u444/" target="_blank" style="color: #d9b0ff;">Instagram</a> | 
+        <a href="https://taplink.cc/tetsuya" target="_blank" style="color: #d9b0ff;">Taplink</a>
+    </p>
+</div>
+</div>
+    <div id="projekte-section" style="display:none;">
+        <div class="card-group">
+        <!-- Karte 1 -->
+        <div class="card">
+            <svg class="img" xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="100%" height="100%" version="1.1" shape-rendering="geometricPrecision" text-rendering="geometricPrecision" image-rendering="optimizeQuality" fill-rule="evenodd" clip-rule="evenodd" viewBox="0 0 784.37 1277.39">
+            <g id="Layer_x0020_1">
+                <g id="_1421394342400">
+                <g>
+                    <polygon fill="#343434" fill-rule="nonzero" points="392.07,0 383.5,29.11 383.5,873.74 392.07,882.29 784.13,650.54"></polygon>
+                    <polygon fill="#8C8C8C" fill-rule="nonzero" points="392.07,0 -0,650.54 392.07,882.29 392.07,472.33"></polygon>
+                    <polygon fill="#3C3C3B" fill-rule="nonzero" points="392.07,956.52 387.24,962.41 387.24,1263.28 392.07,1277.38 784.37,724.89"></polygon>
+                    <polygon fill="#8C8C8C" fill-rule="nonzero" points="392.07,1277.38 392.07,956.52 -0,724.89"></polygon>
+                    <polygon fill="#141414" fill-rule="nonzero" points="392.07,882.29 784.13,650.54 392.07,472.33"></polygon>
+                    <polygon fill="#393939" fill-rule="nonzero" points="0,650.54 392.07,882.29 392.07,472.33"></polygon>
+                </g>
+                </g>
+            </g>
+            </svg>
+            <div class="textBox">
+            <p class="text head">Avelly</p>
+            <span>Clothing Brand</span>
+            <p class="text price"></p>
+            </div>
+        </div>
+        <!-- Karte 2 -->
+        <div class="card">
+            <svg class="img" xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="100%" height="100%" version="1.1" shape-rendering="geometricPrecision" text-rendering="geometricPrecision" image-rendering="optimizeQuality" fill-rule="evenodd" clip-rule="evenodd" viewBox="0 0 784.37 1277.39">
+            <g id="Layer_x0020_1">
+                <g id="_1421394342400">
+                <g>
+                    <polygon fill="#343434" fill-rule="nonzero" points="392.07,0 383.5,29.11 383.5,873.74 392.07,882.29 784.13,650.54"></polygon>
+                    <polygon fill="#8C8C8C" fill-rule="nonzero" points="392.07,0 -0,650.54 392.07,882.29 392.07,472.33"></polygon>
+                    <polygon fill="#3C3C3B" fill-rule="nonzero" points="392.07,956.52 387.24,962.41 387.24,1263.28 392.07,1277.38 784.37,724.89"></polygon>
+                    <polygon fill="#8C8C8C" fill-rule="nonzero" points="392.07,1277.38 392.07,956.52 -0,724.89"></polygon>
+                    <polygon fill="#141414" fill-rule="nonzero" points="392.07,882.29 784.13,650.54 392.07,472.33"></polygon>
+                    <polygon fill="#393939" fill-rule="nonzero" points="0,650.54 392.07,882.29 392.07,472.33"></polygon>
+                </g>
+                </g>
+            </g>
+            </svg>
+            <div class="textBox">
+            <p class="text head">Web Design</p>
+            <span>hosting/design</span>
+            <p class="text price"></p>
+            </div>
+        </div>
+        <!-- Karte 3 -->
+        <div class="card">
+            <svg class="img" xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="100%" height="100%" version="1.1" shape-rendering="geometricPrecision" text-rendering="geometricPrecision" image-rendering="optimizeQuality" fill-rule="evenodd" clip-rule="evenodd" viewBox="0 0 784.37 1277.39">
+            <g id="Layer_x0020_1">
+                <g id="_1421394342400">
+                <g>
+                    <polygon fill="#343434" fill-rule="nonzero" points="392.07,0 383.5,29.11 383.5,873.74 392.07,882.29 784.13,650.54"></polygon>
+                    <polygon fill="#8C8C8C" fill-rule="nonzero" points="392.07,0 -0,650.54 392.07,882.29 392.07,472.33"></polygon>
+                    <polygon fill="#343434" fill-rule="nonzero" points="392.07,0 383.5,29.11 383.5,873.74 392.07,882.29 784.13,650.54"></polygon>
+                    <polygon fill="#8C8C8C" fill-rule="nonzero" points="392.07,0 -0,650.54 392.07,882.29 392.07,472.33"></polygon>
+                    <polygon fill="#3C3C3B" fill-rule="nonzero" points="392.07,956.52 387.24,962.41 387.24,1263.28 392.07,1277.38 784.37,724.89"></polygon>
+                    <polygon fill="#8C8C8C" fill-rule="nonzero" points="392.07,1277.38 392.07,956.52 -0,724.89"></polygon>
+                    <polygon fill="#141414" fill-rule="nonzero" points="392.07,882.29 784.13,650.54 392.07,472.33"></polygon>
+                    <polygon fill="#393939" fill-rule="nonzero" points="0,650.54 392.07,882.29 392.07,472.33"></polygon>
+                </g>
+                </g>
+            </g>
+            </svg>
+            <div class="textBox">
+                <p class="text head">My own app</p>
+            <span>building app</span>
+            <p class="text price"></p>
+        </div>
+    </div>
+    </div> <!-- Close .card-group -->
+</div> <!-- Close #projekte-section -->
+<div id="kontakt-section" style="display:none; text-align: center; margin-top: 2em;">
+    <h2>Kontakt</h2>
+    <p>Du kannst uns über die folgenden Wege erreichen:</p>
+    
+    <!-- Kontaktinformationen -->
+    <p>
+        <strong>E-Mail:</strong> <a href="mailto:nowak--noah@t-online.de" style="color: #d9b0ff;">My personal Email</a><br>
+        <strong>E-Mail:</strong> <a href="mailto:avellybusiness@gmail.com" style="color: #d9b0ff;">Avelly-email</a><br>
+    </p>
+    
+    <!-- Soziale Medien -->
+    <p style="margin-top: 2em;">
+        Folge uns auf: 
+        <a href="https://www.instagram.com/noah4u444/" target="_blank" style="color: #d9b0ff;">Instagram</a> | 
+        <a href="https://taplink.cc/tetsuya" target="_blank" style="color: #d9b0ff;">My Taplink</a>
+    </p>
+</div>
+    <script>
+        function showSection(section) {
+            document.getElementById('home-section').style.display = 'none';
+            document.getElementById('projekte-section').style.display = 'none';
+            document.getElementById('kontakt-section').style.display = 'none';
+            if (section === 'home') {
+                document.getElementById('main-title').textContent = 'Willkommen auf meiner Website!';
+                document.getElementById('home-section').style.display = 'block';
+            } else if (section === 'projekte') {
+                document.getElementById('main-title').textContent = 'Projekte';
+                document.getElementById('projekte-section').style.display = 'block';
+            } else if (section === 'kontakt') {
+                document.getElementById('main-title').textContent = 'Kontakt';
+                document.getElementById('kontakt-section').style.display = 'block';
+            }
+        }
+        // Standardmäßig Home anzeigen
+        showSection('home');
+    </script>
+</body>
+</html>
